@@ -2,7 +2,7 @@
    サイト全体の設定（全ページ共通）。ここを編集してください
    ===================================================== */
 const SITE = {
-  name: "〇〇研究室",
+  name: "大野研究室",
   language: "ja",
   nav: [
     { label: "研究",           href: "index.html#research" },
@@ -11,7 +11,7 @@ const SITE = {
     { label: "お知らせ",       href: "index.html#news" },
     { label: "配属希望の方へ", href: "index.html#join" }
   ],
-  footerNote: "〇〇大学 〇〇学部 〇〇研究室",
+  footerNote: "鹿児島大学 工学部 大野研究室",
   theme: {
     // "--accent": "#b97a00",
     // "--deep": "#0e2f3a",
