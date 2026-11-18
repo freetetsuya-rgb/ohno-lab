@@ -6,14 +6,66 @@
 <title>研究紹介</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;800&family=Zen+Kaku+Gothic+New:wght@400;500&display=swap">
 <link rel="stylesheet" href="style.css">
+<style>
+/* 追加したオリジナルセクション用のデザイン */
+.custom-section {
+  padding: 4rem 1rem;
+  background-color: var(--back);
+  max-width: 900px;
+  margin: 0 auto;
+}
+.custom-section h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-family: 'Shippori Mincho', serif;
+  color: var(--accent, #b97a00);
+}
+.qa-box {
+  background: white;
+  border-radius: 8px;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+.qa-box h3 {
+  color: var(--deep, #0e2f3a);
+  margin-top: 0;
+  border-bottom: 2px solid var(--accent, #b97a00);
+  padding-bottom: 0.5rem;
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-size: 1.2rem;
+}
+.qa-box p {
+  line-height: 1.8;
+  margin-bottom: 0;
+}
+</style>
 </head>
 <body>
 <nav id="site-nav"></nav>
 <main id="main"></main>
+
+<!-- ここが追加したい独自セクション（最初は非表示） -->
+<div id="custom-content" style="display:none;">
+  <section class="custom-section">
+    <h2>より詳しい情報</h2>
+    
+    <div class="qa-box">
+      <h3>よく聞かれる質問：なぜ情報系なのに「ウズラ」なの？</h3>
+      <p>私の研究を紹介すると一番よく聞かれるのがこの質問です。実は、鳥類は人間などの哺乳類よりも視覚のネットワークが独自に高度に発達しています。中でもウズラは、脳から目（網膜）へ信号を送る「向網膜系」の構造が観察しやすく、生き物が持つ『選択的注意（アテンション）』のメカニズムを解明するためのモデル動物として非常に優れているからです。</p>
+    </div>
+
+    <div class="qa-box">
+      <h3>向網膜系と情報科学のつながり</h3>
+      <p>「情報科学専攻＝一日中PCとにらめっこ」というイメージがあるかもしれません。しかし、現在のAI技術を支えるニューラルネットワークも、もとは生物の脳を模倣したものです。既存のデータセットを使うだけでなく、ウズラという最高のモデルに自らの手で直接触れ、その洗練された情報処理システムを電気生理学的に計測・解析する。泥臭いですが、これが本研究室ならではの強みです。</p>
+    </div>
+  </section>
+</div>
+
 <footer id="site-footer"></footer>
 <script src="site.js"></script>
 <script>
-/* この研究者の内容。ここを編集してください */
+/* この研究者の内容 */
 renderResearcher({
   name: "下田 哲也",
   role: "博士前期課程 2年",
@@ -28,11 +80,23 @@ renderResearcher({
     "上の図のように、生体から得られる信号はばらつきが多く、単一の応答では何も見えてきません。そこで複数回の試行に対する応答を記録することで、意味のある応答の特徴を抽出していく。「生き物の脳」という複雑な情報処理システムに対し、実験とデータ解析の両輪でアプローチしていくことが、本研究の独自の面白さです。"
   ],
   topics: [
-    { 
-      title: "鳥類大脳高外套におけるHA-HFの相互投射に関する研究", 
-    },
+    { title: "鳥類大脳高外套におけるHA-HFの相互投射に関する研究" },
   ],
   email: "k6438970@kadai.jp"
+});
+
+/* site.jsの描画が終わった後に、独自セクションを「連絡先」の前に挿入する処理 */
+document.addEventListener("DOMContentLoaded", function() {
+  const main = document.getElementById("main");
+  const customContent = document.getElementById("custom-content").innerHTML;
+  
+  // mainの中にある最後のセクション（連絡先）を取得
+  const sections = main.getElementsByTagName("section");
+  if(sections.length > 0) {
+    const lastSection = sections[sections.length - 1];
+    // 連絡先セクションの直前に、用意した独自HTMLを挿入
+    lastSection.insertAdjacentHTML('beforebegin', customContent);
+  }
 });
 </script>
 </body>
