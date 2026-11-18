@@ -14,31 +14,63 @@
 <script src="site.js"></script>
 <script>
 /* この研究者の内容。ここを編集してください */
-renderResearcher({
-  name: "小宮路　爽斗",
-  role: "修士課程 2年",
-  affiliation: "鹿児島大学大学院　理工学研究科　情報科学専攻　情報科学プログラム　認知生体情報コース",
+const R1 = {
+  name: "佐藤 花子",
+  role: "博士課程 2年",
+  affiliation: "〇〇大学 〇〇学部",
   photo: "",                       // 例: "images/yamada.jpg"
-  keywords: ["脳波", "P300", "オドボール課題"],
+  keywords: ["キーワード1", "キーワード2", "キーワード3"],
   summary: [
-    "ALSの患者など、手足を自由に動かすことができない人はパソコンでキーボードを操作することができない。そのため、このような人向けにP300spellerという技術が存在する。P300spellerとは人間の脳波を用いてPCに文字を入力するシステムのことである。文字を入力する人は、図１のようなアルファベットや数字が書かれたものから入力したい文字に注目し、各行、各列がランダムに点滅することにより、その注目している文字が何かを判断する。",
+    "研究の背景と目的を、専門外の人にも伝わる言葉で書きます。",
     { src: "images/fig1.png", caption: "", width: "360px" },   // 図1：文章の途中に入る画像（width で大きさを調整）
-    "このP300spellerは全世界で研究されているものであるが、このシステムでは視線を動かす必要があり、眼球を動かせない人には使えないシステムであると考えた。そこで、眼球を動かすことなくPC上に文字を入力することのできるシステムを目指し、研究を進めた。図２のように画面に文字を一つのみ配置し、ランダムな順番で文字を切り替えます。文字を入力する人は入力したい文字を意識して、実際にその文字が出てきた際の反応を見て文字入力を行う手法、（これはオドボール課題というものを使用したもので、同じ刺激を繰り返し提示する中に、ときどき異なる刺激を混ぜて提示し、その刺激に対する人間の脳や行動の反応を調べる心理学・認知神経科学の実験課題を指す。）現状形になっていないものの、実現を目指し研究を進めている。",
+    "段落は自由に追加できます。",
     { src: "images/fig2.png", caption: "", width: "360px" }    // 図2：研究概要の最後に入る画像
   ],
   topics: [   // 研究テーマ（テーマ名のみ。説明を足すときは text: "..." を追加）
-    { title: "脳波を用いた文字入力の研究" }
+    { title: "ここに研究テーマを書きます" }
+  ],
   challenges: [   // 研究で苦労したこと（文章。画像も summary と同じ書き方で入れられます）
     "研究を進める中で苦労したことと、それをどう乗り越えたかを書きます。",
-    "なかなか思うような結果が出なく、意欲がなくなることが多くありましたが、仲間たちの協力もあり何とか研究を続けることができた"
+    "失敗した経験や、そこから学んだことなども書くと、読む人の参考になります。"
   ],
   faq: [   // よくある質問（q: 質問, a: 答え。項目は自由に増減できます）
-    { q: "配属前に勉強しておくことはありますか？", a: "研究したいテーマについて勉強しておくといいですが、必須ではないです。私は特にしてなかったです。" },
-    { q: "研究室での1日の過ごし方を教えてください。", a: "コアタイムはなく、基本研究室にいることはないです。自宅で解析を進めることがほとんどです。" },
-    { q: "なぜその研究テーマにしたのですか", a: "研究室の先輩が脳波の研究をしていて、脳波に興味を持ったのがきっかけです。そこから脳波で文字を入力出来たら面白そうだという安直な理由です" },
+    { q: "配属前に勉強しておくことはありますか？", a: "ここに答えを書きます。" },
+    { q: "研究室での1日の過ごし方を教えてください。", a: "ここに答えを書きます。" },
+    { q: "研究のやりがいは何ですか？", a: "ここに答えを書きます。" }
   ],
-  email: "k2491769@kadai.jp"
-});
+  email: "name@example.ac.jp"
+};
+renderResearcher(R1);
+</script>
+<script>
+/* 「研究で苦労したこと」「よくある質問」の表示（このHTMLだけで動くようにするための処理。通常は編集不要）
+   site.js / style.css が新しい版で、すでに表示されている場合は何もしません */
+(function () {
+  var main = $("main"), join = main.querySelector("section.join");
+  var has = function (t) { return [].some.call(main.querySelectorAll("h2"), function (h) { return h.textContent === t; }); };
+  var sec = function (title, child) {
+    var s = el("section", {}, [el("h2", { textContent: title }), child]);
+    main.insertBefore(s, join);
+  };
+  if (R1.challenges && !has("研究で苦労したこと")) {
+    sec("研究で苦労したこと", el("div", { className: "text" }, R1.challenges.map(function (t) { return el("p", { textContent: t }); })));
+  }
+  if (R1.faq && !has("よくある質問")) {
+    document.head.append(el("style", { textContent:
+      ".faq{max-width:52em;border-top:1px solid var(--line)}" +
+      ".faq details{border-bottom:1px solid var(--line)}" +
+      ".faq summary{cursor:pointer;list-style:none;padding:18px 36px 18px 0;position:relative;font-weight:500}" +
+      ".faq summary::-webkit-details-marker{display:none}" +
+      ".faq summary::before{content:'Q';font-family:var(--serif);font-weight:800;color:var(--accent);margin-right:14px}" +
+      ".faq summary::after{content:'+';position:absolute;right:4px;top:50%;transform:translateY(-50%);color:var(--accent);font-size:22px}" +
+      ".faq details[open] summary::after{content:'−'}" +
+      ".faq p{position:relative;margin:0 0 20px;padding-left:28px;max-width:40em;color:var(--muted)}" +
+      ".faq p::before{content:'A';position:absolute;left:0;font-family:var(--serif);font-weight:800;color:var(--muted)}" }));
+    sec("よくある質問", el("div", { className: "faq" }, R1.faq.map(function (x) {
+      return el("details", {}, [el("summary", { textContent: x.q }), el("p", { textContent: x.a })]);
+    })));
+  }
+})();
 </script>
 </body>
 </html>
