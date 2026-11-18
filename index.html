@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>研究紹介</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;800&family=Zen+Kaku+Gothic+New:wght@400;500&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav id="site-nav"></nav>
+<main id="main"></main>
+<footer id="site-footer"></footer>
+<script src="site.js"></script>
+<script>
+/* =====================================================
+   トップページの内容。ここを編集してください
+   （文中の \n は改行になります）
+   ===================================================== */
+const HOME = {
+  hero: {
+    title: "ここに研究室の\nキャッチコピーを入れます。",
+    text: "研究室の目的や、取り組んでいる分野を一〜二文で説明します。",
+    facts: [   // 数字などの一言紹介（不要なら削除）
+      { value: "3名",   label: "教員・学生" },
+      { value: "3つ",   label: "研究テーマ" },
+      { value: "2020年", label: "研究室を設立" }
+    ]
+  },
+
+  themes: {
+    title: "研究テーマ",
+    items: [
+      { title: "研究テーマ 1", text: "テーマの説明を書きます。" },
+      { title: "研究テーマ 2", text: "テーマの説明を書きます。" },
+      { title: "研究テーマ 3", text: "テーマの説明を書きます。" }
+    ]
+  },
+
+  members: {
+    title: "メンバー",
+    // 指導教員（研究紹介ページへのリンクなし）
+    advisorLabel: "指導教員",
+    advisor: { name: "山田 太郎", role: "教授。専門分野", photo: "" },
+    // 学生（href の研究紹介ページへ移動できます）
+    studentsLabel: "学生",
+    students: [
+      { name: "佐藤 花子", role: "博士課程 2年。研究テーマ", href: "researcher-1.html", photo: "" },
+      { name: "鈴木 一郎", role: "修士課程 1年。研究テーマ", href: "researcher-2.html", photo: "" }
+    ]
+  },
+
+  newsTitle: "お知らせ",
+  news: [
+    { date: "2026-10-01", text: "ウェブサイトを公開しました。" },
+    { date: "2026-09-15", text: "〇〇学会で研究成果を発表しました。" }
+  ],
+
+  join: {
+    title: "配属を考えている方へ",
+    text: "見学や配属についての案内を書きます。経験の有無など、気軽に連絡できる雰囲気も伝えましょう。",
+    button: "メールで問い合わせる",
+    email: "lab@example.ac.jp",
+    info: [
+      { label: "場所",   value: "〇〇学部 〇号館 〇階 〇〇号室" },
+      { label: "連絡先", value: "lab@example.ac.jp" }
+    ]
+  }
+};
+
+renderChrome("");
+const H = HOME, M = H.members;
+const person = (p, link) => el(link ? "a" : "div", link ? { className: "person", href: p.href } : { className: "person" }, [
+  avatar(p),
+  el("b", { textContent: p.name }),
+  p.role,
+  link ? el("span", { className: "go", textContent: "研究紹介を見る →" }) : ""
+].filter(Boolean));
+
+$("main").append(
+  el("header", { className: "hero" }, [
+    ripples(),
+    el("h1", {}, br(H.hero.title)),
+    el("p", { textContent: H.hero.text }),
+    el("div", { className: "facts" }, H.hero.facts.map(f =>
+      el("div", {}, [el("b", { textContent: f.value }), f.label])))
+  ]),
+  sec([h2(H.themes.title), el("div", { className: "themes" }, H.themes.items.map(t =>
+    el("article", { className: "theme" }, [el("h3", { textContent: t.title }), el("p", { textContent: t.text })])))],
+    { id: "research" }),
+  sec([
+    h2(M.title),
+    el("h3", { className: "group", textContent: M.advisorLabel }),
+    el("div", { className: "people" }, person(M.advisor, false)),
+    el("h3", { className: "group", textContent: M.studentsLabel }),
+    el("div", { className: "people" }, M.students.map(s => person(s, true)))
+  ], { id: "members" }),
+  sec([h2(H.newsTitle), el("ul", { className: "pubs news" }, H.news.map(n =>
+    el("li", {}, [el("time", { textContent: n.date }), el("div", { textContent: n.text })])))],
+    { id: "news" }),
+  sec([
+    h2(H.join.title),
+    el("p", { textContent: H.join.text }),
+    el("a", { className: "btn", href: `mailto:${H.join.email}`, textContent: H.join.button }),
+    el("dl", {}, H.join.info.flatMap(i => [el("dt", { textContent: i.label }), el("dd", { textContent: i.value })]))
+  ], { id: "join", className: "join" })
+);
+</script>
+</body>
+</html>

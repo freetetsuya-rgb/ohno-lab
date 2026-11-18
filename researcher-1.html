@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>研究紹介</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;800&family=Zen+Kaku+Gothic+New:wght@400;500&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav id="site-nav"></nav>
+<main id="main"></main>
+<footer id="site-footer"></footer>
+<script src="site.js"></script>
+<script>
+/* この研究者の内容。ここを編集してください */
+renderResearcher({
+  name: "佐藤 花子",
+  role: "博士課程 2年",
+  affiliation: "〇〇大学 〇〇学部",
+  photo: "",                       // 例: "images/yamada.jpg"
+  keywords: ["キーワード1", "キーワード2", "キーワード3"],
+  summary: [
+    "研究の背景と目的を、専門外の人にも伝わる言葉で書きます。",
+    "段落は自由に追加できます。"
+  ],
+  topics: [
+    { title: "研究テーマ 1", text: "テーマの説明を書きます。", image: "" },
+    { title: "研究テーマ 2", text: "テーマの説明を書きます。", image: "" }
+  ],
+  publications: [
+    { year: "2026", text: "論文タイトル", note: "著者名 / 雑誌名, 巻(号), ページ", href: "" },
+    { year: "2025", text: "論文タイトル", note: "著者名 / 雑誌名, 巻(号), ページ", href: "" }
+  ],
+  email: "name@example.ac.jp",
+  links: [
+    { label: "researchmap", href: "https://researchmap.jp/" }
+  ]
+});
+</script>
+</body>
+</html>
