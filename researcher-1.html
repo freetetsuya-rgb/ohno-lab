@@ -22,20 +22,14 @@ renderResearcher({
   keywords: ["キーワード1", "キーワード2", "キーワード3"],
   summary: [
     "研究の背景と目的を、専門外の人にも伝わる言葉で書きます。",
-    "段落は自由に追加できます。"
+    { src: "images/fig1.png", caption: "", width: "360px" },   // 図1：文章の途中に入る画像（width で大きさを調整）
+    "段落は自由に追加できます。",
+    { src: "images/fig2.png", caption: "", width: "360px" }    // 図2：研究概要の最後に入る画像
   ],
-  topics: [
-    { title: "研究テーマ 1", text: "テーマの説明を書きます。", image: "" },
-    { title: "研究テーマ 2", text: "テーマの説明を書きます。", image: "" }
+  topics: [   // 研究テーマ（テーマ名のみ。説明を足すときは text: "..." を追加）
+    { title: "ここに研究テーマを書きます" }
   ],
-  publications: [
-    { year: "2026", text: "論文タイトル", note: "著者名 / 雑誌名, 巻(号), ページ", href: "" },
-    { year: "2025", text: "論文タイトル", note: "著者名 / 雑誌名, 巻(号), ページ", href: "" }
-  ],
-  email: "name@example.ac.jp",
-  links: [
-    { label: "researchmap", href: "https://researchmap.jp/" }
-  ]
+  email: "name@example.ac.jp"
 });
 </script>
 </body>

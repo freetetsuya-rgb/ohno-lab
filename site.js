@@ -6,6 +6,7 @@ const SITE = {
   language: "ja",
   nav: [
     { label: "研究",           href: "index.html#research" },
+    { label: "活動内容",       href: "index.html#activities" },
     { label: "メンバー",       href: "index.html#members" },
     { label: "お知らせ",       href: "index.html#news" },
     { label: "配属希望の方へ", href: "index.html#join" }
@@ -33,6 +34,18 @@ const ripples = () => {
   d.innerHTML = "<i></i><i></i><i></i><em></em>";
   return d;
 };
+/* 画像の読み込み。images フォルダに無いときは同じ場所も探し、無ければ場所を表示 */
+const safeImg = (src, alt) => {
+  const img = el("img", { alt });
+  const flat = src.split("/").pop();
+  let tried = false;
+  img.onerror = () => {
+    if (!tried && flat !== src) { tried = true; img.src = flat; return; }
+    img.replaceWith(el("div", { className: "ph", textContent: `画像が見つかりません：${src}` }));
+  };
+  img.src = src;
+  return img;
+};
 const avatar = (p, cls = "av") => el("div", { className: cls },
   p.photo ? el("img", { src: p.photo, alt: p.name }) : p.name.trim().charAt(0));
 
@@ -51,6 +64,18 @@ function renderChrome(pageTitle) {
   );
 }
 
+/* 図：図1, 図2… と登場順に自動で番号を付ける */
+let figNo = 0;
+const fig = f => {
+  const label = `図${++figNo}` + (f.caption ? `　${f.caption}` : "");
+  const fg = el("figure", {}, [
+    f.src ? safeImg(f.src, label) : el("div", { className: "ph", textContent: "画像を入れてください" }),
+    el("figcaption", { textContent: label })
+  ]);
+  if (f.width) fg.style.maxWidth = f.width;   // 画像の最大幅（例: "400px" や "50%"）
+  return fg;
+};
+
 /* 研究者ページ用の描画 */
 function renderResearcher(R) {
   renderChrome(R.name);
@@ -62,21 +87,21 @@ function renderResearcher(R) {
       el("p", { textContent: `${R.role}／${R.affiliation}` }),
       el("ul", { className: "tags" }, R.keywords.map(k => el("li", { textContent: k })))
     ]),
-    sec([h2("研究概要"), el("div", { className: "text" }, R.summary.map(t => el("p", { textContent: t })))]),
-    sec([h2("研究テーマ"), el("div", { className: "themes" }, R.topics.map(t =>
+    sec([h2("研究テーマ"), el("div", { className: "themes one" }, R.topics.map(t =>
       el("article", { className: "theme" }, [
         el("h3", { textContent: t.title }),
-        el("p", { textContent: t.text }),
-        t.image ? el("img", { src: t.image, alt: t.title }) : ""
+        t.text ? el("p", { textContent: t.text }) : "",
+        t.image ? safeImg(t.image, t.title) : ""
       ])))]),
-    sec([h2("主な業績"), el("ul", { className: "pubs" }, R.publications.map(p =>
-      el("li", {}, [
-        el("span", { className: "year", textContent: p.year }),
-        el("div", {}, [
-          p.href ? el("a", { href: p.href, textContent: p.text, target: "_blank", rel: "noopener" }) : p.text,
-          p.note ? el("span", { className: "note", textContent: p.note }) : ""
-        ])
-      ])))]),
+    sec([
+      h2("研究概要"),
+      el("div", { className: "text" }, [
+        ...R.summary.map(item => Array.isArray(item)
+          ? el("div", { className: "figures" + (item.length === 1 ? " one" : "") }, item.map(fig))   // 画像を横に並べる
+          : (typeof item === "object" ? fig(item) : el("p", { textContent: item }))),               // 画像 or 文章
+        ...((R.figures && R.figures.length) ? [el("div", { className: "figures" + (R.figures.length === 1 ? " one" : "") }, R.figures.map(fig))] : [])   // 文章の後ろに置く画像（任意）
+      ])
+    ]),
     sec([
       h2("連絡先"),
       el("p", {}, el("a", { href: `mailto:${R.email}`, textContent: R.email })),

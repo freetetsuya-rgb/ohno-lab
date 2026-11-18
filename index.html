@@ -37,6 +37,16 @@ const HOME = {
     ]
   },
 
+  activities: {
+    title: "研究室の活動内容",
+    items: [   // when: 頻度や時期 / title: 活動名 / text: 説明（項目は自由に増減できます）
+      { when: "毎週",     title: "ゼミ",         text: "研究の進捗を共有し、議論します。" },
+      { when: "毎月",     title: "文献紹介",     text: "論文を読み、内容を紹介し合います。" },
+      { when: "年に数回", title: "学会発表",     text: "国内外の学会で研究成果を発表します。" },
+      { when: "夏・冬",   title: "合宿・調査",   text: "フィールド調査や研究室合宿を行います。" }
+    ]
+  },
+
   members: {
     title: "メンバー",
     // 指導教員（研究紹介ページへのリンクなし）
@@ -88,6 +98,12 @@ $("main").append(
   sec([h2(H.themes.title), el("div", { className: "themes" }, H.themes.items.map(t =>
     el("article", { className: "theme" }, [el("h3", { textContent: t.title }), el("p", { textContent: t.text })])))],
     { id: "research" }),
+  sec([h2(H.activities.title), el("ul", { className: "pubs news" }, H.activities.items.map(a =>
+    el("li", {}, [
+      el("span", { className: "year", textContent: a.when }),
+      el("div", {}, [el("b", { textContent: a.title }), a.text ? el("span", { className: "note", textContent: a.text }) : ""])
+    ])))],
+    { id: "activities" }),
   sec([
     h2(M.title),
     el("h3", { className: "group", textContent: M.advisorLabel }),
